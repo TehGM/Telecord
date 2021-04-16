@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>TehGM.Telecord</RootNamespace>
+    <Authors>TehGM</Authors>
+    <PackageId>Telecord</PackageId>
+    <Description>A configurable bot for bridging messages between Telegram and Discord.</Description>
+    <Copyright>Copyright (c) 2021 TehGM</Copyright>
+    <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/TehGM/Telecord</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+</Project>
