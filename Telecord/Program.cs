@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Serilog;
 using TehGM.Telecord.Discord;
 using TehGM.Telecord.Telegram;
@@ -26,14 +27,15 @@ namespace TehGM.Telecord
                 .AddCommandLine(args)
                 .Build();
 
-            // enable logging
-            Logging.ConfigureLogging(config);
-
             try
             {
                 // prepare DI container
                 IServiceCollection serviceCollection = ConfigureServices(config);
                 _services = serviceCollection.BuildServiceProvider();
+
+                // initialize Telegram client
+                ITelegramClient telegramClient = _services.GetRequiredService<ITelegramClient>();
+                telegramClient.Start();
 
                 // wait forever to prevent window closing
                 await Task.Delay(-1).ConfigureAwait(false);
@@ -48,11 +50,18 @@ namespace TehGM.Telecord
         {
             IServiceCollection services = new ServiceCollection();
 
+            // Logging
+            Logging.ConfigureLogging(configuration);
+            services.AddLogging()
+                .AddSingleton<ILoggerFactory>(new LoggerFactory()
+                        .AddSerilog(Log.Logger, dispose: true));
+
             // Discord
             services.Configure<DiscordOptions>(configuration.GetSection("Discord"));
 
             // Telegram
-            services.Configure<TelegramOptions>(configuration.GetSection("Telegram"));
+            services.AddSingleton<ITelegramClient, Telegram.Services.TelecordTelegramClient>()
+                .Configure<TelegramOptions>(configuration.GetSection("Telegram"));
 
             return services;
         }
