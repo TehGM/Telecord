@@ -37,6 +37,10 @@ namespace TehGM.Telecord
                 ITelegramClient telegramClient = _services.GetRequiredService<ITelegramClient>();
                 telegramClient.Start();
 
+                // initialize Discord client
+                IDiscordClient discordClient = _services.GetRequiredService<IDiscordClient>();
+                await discordClient.StartClientAsync();
+
                 // wait forever to prevent window closing
                 await Task.Delay(-1).ConfigureAwait(false);
             }
@@ -57,7 +61,8 @@ namespace TehGM.Telecord
                         .AddSerilog(Log.Logger, dispose: true));
 
             // Discord
-            services.Configure<DiscordOptions>(configuration.GetSection("Discord"));
+            services.AddSingleton<IDiscordClient, Discord.Services.TelecordDiscordClient>()
+                .Configure<DiscordOptions>(configuration.GetSection("Discord"));
 
             // Telegram
             services.AddSingleton<ITelegramClient, Telegram.Services.TelecordTelegramClient>()

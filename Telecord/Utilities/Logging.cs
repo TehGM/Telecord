@@ -3,7 +3,6 @@ using System.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Events;
-using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace TehGM.Telecord.Utilities
 {
@@ -49,7 +48,7 @@ namespace TehGM.Telecord.Utilities
 
 
                 // create the logger
-                Serilog.Log.Logger = config.CreateLogger();
+                Log.Logger = config.CreateLogger();
 
                 // enable logging of unhandled exceptions, but only when initializing for the first time
                 if (!_initialized)
@@ -63,8 +62,8 @@ namespace TehGM.Telecord.Utilities
         {
             try
             {
-                Serilog.Log.Fatal((Exception)e.ExceptionObject, "An exception was unhandled");
-                Serilog.Log.CloseAndFlush();
+                Log.Fatal((Exception)e.ExceptionObject, "An exception was unhandled");
+                Log.CloseAndFlush();
             }
             catch { }
         }
