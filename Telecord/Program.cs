@@ -2,8 +2,10 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using TehGM.Telecord.Discord;
 using TehGM.Telecord.Telegram;
+using TehGM.Telecord.Utilities;
 
 namespace TehGM.Telecord
 {
@@ -23,6 +25,9 @@ namespace TehGM.Telecord
                 .AddEnvironmentVariables()
                 .AddCommandLine(args)
                 .Build();
+
+            // enable logging
+            Logging.ConfigureLogging(config);
 
             try
             {
@@ -54,6 +59,7 @@ namespace TehGM.Telecord
 
         private static void OnExit()
         {
+            try { Log.CloseAndFlush(); } catch { }
             try
             {
                 if (_services is IDisposable disposableServices)
