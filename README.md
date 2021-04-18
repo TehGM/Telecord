@@ -18,6 +18,9 @@ You need to configure your bridge links. Bridge configurations are JSON objects 
 `DiscordChannelID` and `TelegramChannelID` are mandatory, and represent Discord Channel ID, and Telegram Chat ID respectively.  
 `Direction` sets what direction the link will function. `ToTelegram` bridges Discord -> Telegram, `ToDiscord` bridges Telegram -> Discord, and `Bidirectional` bridges both ways. This value is optional - if not provided, will default to `Bidirectional`.
 
+### Logging
+This bot uses [Serilog](https://serilog.net/) library to do logging, along with [Serilog.Settings.Configuration](https://github.com/serilog/serilog-settings-configuration) for configuration with [appsettings.json](Telecord/appsettings.json) file.
+
 
 ## Usage
 ### Requirements
