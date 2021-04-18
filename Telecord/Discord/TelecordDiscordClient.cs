@@ -51,6 +51,11 @@ namespace TehGM.Telecord.Discord.Services
                 });
                 this._log.LogTrace("{Type} message {ID} received");
             }
+            if (msg.Author.Id == this.Client.CurrentUser.Id)
+            {
+                this._log.LogTrace("Message {ID} is own message, skipping");
+                return Task.CompletedTask;
+            }
             this.MessageReceived?.Invoke(this, msg);
             return Task.CompletedTask;
         }
