@@ -1,4 +1,5 @@
 # Telecord - a Telegram and Discord bridge bot
+[![GitHub top language](https://img.shields.io/github/languages/top/TehGM/Telecord)](https://github.com/TehGM/Telecord) [![GitHub](https://img.shields.io/github/license/TehGM/Telecord)](LICENSE) [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/TehGM/Telecord/.NET%20Build)](https://github.com/TehGM/Telecord/actions) [![GitHub issues](https://img.shields.io/github/issues/TehGM/Telecord)](https://github.com/TehGM/Telecord/issues)
 A simple and configurable .NET 5 bot for bridging messages between Telegram and Discord channels.
 
 
