@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using TehGM.Telecord.Bridge;
 using TehGM.Telecord.Discord;
 using TehGM.Telecord.Telegram;
 using TehGM.Telecord.Utilities;
@@ -41,6 +42,9 @@ namespace TehGM.Telecord
                 IDiscordClient discordClient = _services.GetRequiredService<IDiscordClient>();
                 await discordClient.StartClientAsync();
 
+                // initialize the bridge
+                IBridge bridge = _services.GetRequiredService<IBridge>();
+
                 // wait forever to prevent window closing
                 await Task.Delay(-1).ConfigureAwait(false);
             }
@@ -67,6 +71,10 @@ namespace TehGM.Telecord
             // Telegram
             services.AddSingleton<ITelegramClient, Telegram.Services.TelecordTelegramClient>()
                 .Configure<TelegramOptions>(configuration.GetSection("Telegram"));
+
+            // Bridge
+            services.AddSingleton<IBridge, Bridge.Services.TelecordBridge>()
+                .Configure<BridgeOptions>(configuration.GetSection("Bridge"));
 
             return services;
         }
